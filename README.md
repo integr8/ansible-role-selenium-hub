@@ -1,5 +1,5 @@
 Selenium HUB
-=========
+=======
 
 Ansible role to deploy a container with Selenium HUB
 
