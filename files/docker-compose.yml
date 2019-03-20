@@ -1,0 +1,37 @@
+version: '3.7'
+services:
+  hub:
+    image: selenium/hub:3.141.59-lithium
+    ports:
+      - "4444:4444"
+    environment:
+      GRID_NEW_SESSION_WAIT_TIMEOUT: -1
+      GRID_JETTY_MAX_THREADS: -1
+      GRID_NODE_POLLING: 10
+      GRID_CLEAN_UP_CYCLE: 10
+      GRID_TIMEOUT: 10
+      GRID_BROWSER_TIMEOUT: 10
+  chrome:
+    image: selenium/node-chrome:3.141.59-lithium
+    volumes:
+      - /dev/shm:/dev/shm
+    environment:
+      HUB_HOST: hub
+      HUB_PORT: 4444
+      NODE_MAX_SESSION: 50
+      NODE_MAX_INSTANCES: 50
+    deploy:
+        replicas: 1
+    entrypoint: bash -c 'SE_OPTS="-host $$HOSTNAME" /opt/bin/entry_point.sh'
+  firefox:
+    image: selenium/node-firefox:3.141.59-lithium
+    volumes:
+      - /dev/shm:/dev/shm
+    environment:
+      HUB_HOST: hub
+      HUB_PORT: 4444
+      NODE_MAX_SESSION: 50
+      NODE_MAX_INSTANCES: 50
+    deploy:
+        replicas: 1
+    entrypoint: bash -c 'SE_OPTS="-host $$HOSTNAME" /opt/bin/entry_point.sh'
