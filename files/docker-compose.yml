@@ -2,8 +2,10 @@ version: '3.7'
 services:
   hub:
     image: selenium/hub:3.141.59-lithium
+    networks:
+      - integr8
     ports:
-      - "4444:4444"
+      - "80"
     environment:
       GRID_NEW_SESSION_WAIT_TIMEOUT: -1
       GRID_JETTY_MAX_THREADS: -1
@@ -11,10 +13,17 @@ services:
       GRID_CLEAN_UP_CYCLE: 10
       GRID_TIMEOUT: 10
       GRID_BROWSER_TIMEOUT: 10
+    labels:
+      - traefik.backend=hub
+      - traefik.frontend.rule=Host:selenium.integr8.me
+      - traefik.port=4444
+      - traefik.docker.network=integr8
   chrome:
     image: selenium/node-chrome:3.141.59-lithium
     volumes:
       - /dev/shm:/dev/shm
+    networks:
+      - integr8
     environment:
       HUB_HOST: hub
       HUB_PORT: 4444
@@ -27,6 +36,8 @@ services:
     image: selenium/node-firefox:3.141.59-lithium
     volumes:
       - /dev/shm:/dev/shm
+    networks:
+      - integr8
     environment:
       HUB_HOST: hub
       HUB_PORT: 4444
@@ -35,3 +46,7 @@ services:
     deploy:
         replicas: 1
     entrypoint: bash -c 'SE_OPTS="-host $$HOSTNAME" /opt/bin/entry_point.sh'
+networks:
+  integr8:
+    external: true
+    name: integr8
