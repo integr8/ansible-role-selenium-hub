@@ -15,7 +15,7 @@ services:
       GRID_BROWSER_TIMEOUT: 10
     labels:
       - traefik.backend=hub
-      - traefik.frontend.rule=Host:selenium.integr8.me
+      - traefik.frontend.rule=Host:seleniumhub.integr8.me
       - traefik.port=4444
       - traefik.docker.network=integr8
   chrome:
