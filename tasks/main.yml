@@ -5,12 +5,18 @@
     suffix: seleniumhub
   register: seleniumhub_temp_dir
 
-- name: Copy docker-compose to manager
-  copy:
-    src: docker-compose.yml
+- name: Interpolate Ansible variables
+  template:
+    src: docker-compose.yml.j2
     dest: "{{ seleniumhub_temp_dir.path }}/docker-compose.yml"
   when: "inventory_hostname == groups['integr8-docker-swarm-manager'][0]"
 
 - name: Deploy Selenium HUB in Swarm
   command: 'docker stack deploy --compose-file {{ seleniumhub_temp_dir.path }}/docker-compose.yml seleniumhub'
   when: "inventory_hostname == groups['integr8-docker-swarm-manager'][0]"
+
+- name: Record Traefik DNS
+  ara_record:
+    key: "seleniumhub_host"
+    value: "http://{{ seleniumhub_host }}"
+    type: url

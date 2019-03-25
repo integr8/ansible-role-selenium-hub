@@ -1,0 +1,3 @@
+---
+seleniumhub_docker_image_version: 3.141.59-lithium
+seleniumhub_host: seleniumhub.integr8.me
