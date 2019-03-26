@@ -20,3 +20,5 @@
     key: "seleniumhub_host"
     value: "http://{{ seleniumhub_host }}"
     type: url
+  tags:
+    - skip_ansible_lint

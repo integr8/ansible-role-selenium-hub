@@ -5,7 +5,11 @@ galaxy_info:
   company: Integr8.me
   issue_tracker_url: https://github.com/integr8/ansible-role-selenium-hub/issues
   license: GPLv3
-  min_ansible_version: 1.2
+  min_ansible_version: 2.7
   github_branch: development
-  galaxy_tags: ['docker', 'docker-swarm', 'swarm', 'container', 'selenium', 'selenium-hub']
+  galaxy_tags: ['docker', 'swarm', 'container', 'selenium', 'seleniumhub']
+  platforms:
+    - name: EL
+      versions:
+        - 7
 dependencies: []
