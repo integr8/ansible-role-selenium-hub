@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-  hub:
+  seleniumhub:
     image: selenium/hub:{{ seleniumhub_docker_image_version }}
     networks:
       - integr8
@@ -31,7 +31,7 @@ services:
     networks:
       - integr8
     environment:
-      HUB_HOST: hub
+      HUB_HOST: seleniumhub
       HUB_PORT: 4444
       NODE_MAX_SESSION: 50
       NODE_MAX_INSTANCES: 50
@@ -48,7 +48,7 @@ services:
     networks:
       - integr8
     environment:
-      HUB_HOST: hub
+      HUB_HOST: seleniumhub
       HUB_PORT: 4444
       NODE_MAX_SESSION: 50
       NODE_MAX_INSTANCES: 50
